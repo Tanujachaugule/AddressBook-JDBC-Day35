@@ -136,11 +136,44 @@ public class DatabaseConnection {
             e.printStackTrace();
         }
     }
+    //UC20 - Add new contact to address book database
+    public void addNewContact(String firstName, String lastName, String address, String city, String state, int zip, int phoneNum, String email) {
+        try {
+            Connection connection = this.getConnection();
+            String query = "INSERT INTO address_book (first_name, last_name, address, city, state, zip, phone_num, email) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, firstName);
+            statement.setString(2, lastName);
+            statement.setString(3, address);
+            statement.setString(4, city);
+            statement.setString(5, state);
+            statement.setInt(6, zip);
+            statement.setInt(7, phoneNum);
+            statement.setString(8, email);
+
+            int rowsAffected = statement.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("New contact added successfully.");
+            } else {
+                System.out.println("Failed to add new contact.");
+            }
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     public static void main(String[] args) throws SQLException {
         DatabaseConnection databaseConnection = new DatabaseConnection();
         databaseConnection.displayDetails();
     }
 
     public void countContact(String countLocation, String countChoice) {
+    }
+
+    public void addContact() {
+    }
+
+    public void addContact(String fName, String lName, int newPhone) {
     }
 }

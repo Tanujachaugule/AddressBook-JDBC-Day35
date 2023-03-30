@@ -14,7 +14,7 @@ public class AddressBookMain {
         while (true) {
             System.out.println(" ---- Address Book Menu ----\n");
             System.out.println(" 1. Display data from database\n"
-                    + " 2. Update contact in database \n 3. Count contacts by city or state\n 4. Exit");
+                    + " 2. Update contact in database \n 3. Count contacts by city or state \n 4. Add contacts \n 5. Exit");
             System.out.print("\n Please enter your choice: ");
             flag = scanner.next();
 
@@ -44,7 +44,17 @@ public class AddressBookMain {
                     connection.countContact(countLocation, countChoice);
 
                     break;
-                case "4":                                               // Exit the program
+                case "4":
+                    System.out.print("Enter first name: ");
+                    fName = scanner.next();
+                    System.out.print("Enter last name: ");
+                    lName = scanner.next();
+                    System.out.print("Enter the new phone number: ");
+                    newPhone = scanner.nextInt();
+                    connection.addContact(fName,lName,newPhone);
+                    break;
+
+                case "5":                                               // Exit the program
                     System.out.println(" Thank you!");
                     return;
 
