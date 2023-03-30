@@ -3,6 +3,9 @@ package com.addressbokkjdbc;
 import java.util.Scanner;
 public class AddressBookMain {
     public static Scanner scanner = new Scanner(System.in);
+
+
+
     public static void operations(){
         DatabaseConnection connection = new DatabaseConnection();
 
@@ -11,7 +14,7 @@ public class AddressBookMain {
         while (true) {
             System.out.println(" ---- Address Book Menu ----\n");
             System.out.println(" 1. Display data from database\n"
-                    + " 2. Update contact in database\n 3. Exit");
+                    + " 2. Update contact in database \n 3. Count contacts by city or state\n 4. Exit");
             System.out.print("\n Please enter your choice: ");
             flag = scanner.next();
 
@@ -30,7 +33,18 @@ public class AddressBookMain {
 
                     connection.updateContact(fName,lName,newPhone);
                     break;
-                case "3":                                               // Exit the program
+                case "3":
+                    System.out.print(" Please enter to count by city or state(city/state): ");
+                    String countChoice = scanner.next();
+
+                    System.out.print(" Please enter the location: ");
+                    String countLocation = scanner.next();
+
+
+                    connection.countContact(countLocation, countChoice);
+
+                    break;
+                case "4":                                               // Exit the program
                     System.out.println(" Thank you!");
                     return;
 
