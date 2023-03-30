@@ -26,7 +26,7 @@ public class DatabaseConnection {
             String query = "select * from address_book";
             Statement statement = con.createStatement();
             ResultSet set = statement.executeQuery(query);
-            while(set.next()) {
+            while (set.next()) {
                 System.out.println("First Name : " + set.getString(1));
                 System.out.println("Last Name : " + set.getString(2));
                 System.out.println("Address : " + set.getString(3));
@@ -41,8 +41,9 @@ public class DatabaseConnection {
             e.printStackTrace();
         }
     }
+
     // - Updating the contact info and sync it with database using JDBC Prepared Statement
-    public void updateContact(String firstname, String lastname, int phone){
+    public void updateContact(String firstname, String lastname, int phone) {
         try {
             Connection connection = this.getConnection();
 
@@ -58,7 +59,7 @@ public class DatabaseConnection {
             //the executeUpdate() method returns the number of rows affected by the update.
             int rowsAffected = statement.executeUpdate();
             if (rowsAffected > 0) {
-                System.out.println("Phone Number updated successfully for person with first name " + firstname + " and last name "+lastname);
+                System.out.println("Phone Number updated successfully for person with first name " + firstname + " and last name " + lastname);
             } else {
                 System.out.println("No employee found with the given name ");
             }
@@ -69,7 +70,32 @@ public class DatabaseConnection {
         }
     }
 
-
+    //UC18 - Retrieve contacts from database in the given date range
+    public void getEmployeesByDateRange(Date startDate, Date endDate) {
+        try {
+            Connection con = this.getConnection();
+            String query = "SELECT * FROM address_book WHERE date_added BETWEEN ? AND ?)";
+            PreparedStatement statement = con.prepareStatement(query);
+            statement.setDate(1, startDate);
+            statement.setDate(2, endDate);
+            ResultSet set = statement.executeQuery();
+            while (set.next()) {
+                System.out.println("First Name : " + set.getString(1));
+                System.out.println("Last Name : " + set.getString(2));
+                System.out.println("Address : " + set.getString(3));
+                System.out.println("City : " + set.getString(4));
+                System.out.println("State : " + set.getString(5));
+                System.out.println("Zip Code : " + set.getInt(6));
+                System.out.println("Phone Number : " + set.getInt(7));
+                System.out.println("Email address : " + set.getString(8));
+                System.out.println("**************************************************\n");
+            }
+            statement.close();
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     public static void main(String[] args) throws SQLException {
         DatabaseConnection databaseConnection = new DatabaseConnection();
         databaseConnection.displayDetails();
